@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poll{% endblock %}
+
+{% block body %}
+    <h3>Sondage</h3>
+    <h5>Créé par {{user.email}} le {{ poll.creationDate|date('d/m/Y') }}</h5>
+    <hr/>
+
+    <h4>{{ poll.title }}</h4>
+
+    {% if poll.pollOptions.count == 0 %} <!-- Si le sondage n'a pas d'options -->
+        <p> Aucune option n'a été créée. </p>
+    {% elseif not verifVote %}<!-- Si l'utilisateur n'a pas encore voté -->
+        {{ form(form) }}
+    {% else %} <!-- Sinon afficher résultats du sondage -->
+        <hr/>
+        <h5>Résultats</h5>
+        {% for option in poll.pollOptions %}
+
+        <h6>{{ option.name }}</h6>
+        <div class="progress"> <!-- Gestion de la barre des sondages -->
+            <div class="progress-bar" role="progressbar" style="width: {{(option.pollVotes.count / poll.pollVotes.count) *100 }}%;">{{((option.pollVotes.count / poll.pollVotes.count) *100)|round }}%</div>
+        </div>
+        
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}

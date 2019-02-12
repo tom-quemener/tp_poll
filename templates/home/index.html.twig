@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="jumbotron">
+    <h1 class="h3 mb-3 font-weight-normal">Sondages</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date de création</th>
+                <th>Titre du sondage</th>
+                <th>Nombre d'options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for poll in polls %}
+            <tr>
+                <td>{{ poll.creationDate ? poll.creationDate|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('poll_show', {'id': poll.id}) }}">
+                    {{ poll.title }}
+                    </a>
+                </td>
+                <td> 
+                    <p>{% if poll.pollOptions.count > 0 %}{{poll.pollOptions.count}}{% else %} aucune {% endif %} option(s)</p>
+                </td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">aucun sondage</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
