@@ -4,7 +4,9 @@
 
 composer install
 
-## Create a database, match your .env then run the next line
+## Match database
+
+Create .env from .env.exemple and math your database connexion informations thenn run the next line :
 
 php bin/console doctrine:schema:create
 
